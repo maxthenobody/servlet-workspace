@@ -62,11 +62,55 @@
     <div class="container"></div>
     <script>
 		$(function() {
-			$("#btn1").click(function() {
-				
+			$("#btn2").click(function() {
+				$.ajax({
+					url: "/servlet/ajax/csv",
+					success: function(data) {
+						// console.log(data);
+						
+						const $table = $("<table></table>");
+						// const persons = data.split("\n").slice(0, data.split("\n").length - 1);
+						const persons = data.split("\n").slice(0, -1);
+						console.log(persons);
+						
+						$(persons).each(function(index, person) {
+							const arr = person.split(",");
+							let tr = "<tr>";
+								tr += "<td>" + arr[0] + "</td>";
+								tr += `<td>${arr[1]}</td>`;
+								tr += `<td>${arr[2]}</td>`;
+								tr += "</tr>";
+							
+							$table.append(tr);
+						});
+						
+						$(".container").append($table);
+					},
+					error: function(xhr, status, err) {
+						console.log(xhr, status, err);
+					}
+				});
 			});
 		});
 	</script>
     
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
